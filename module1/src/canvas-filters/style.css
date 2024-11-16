@@ -1,0 +1,31 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+#app {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding: 3rem;
+}
+
+#app div {
+    place-self: center;
+}
+
+#app div p {
+    background: black;
+    color: white;
+    padding: 1rem;
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+}
+
+#app div canvas {
+    display: block;
+    max-width: 100%;
+}
