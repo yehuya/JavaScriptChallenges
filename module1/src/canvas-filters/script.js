@@ -22,6 +22,51 @@ const red = (imageData) => {
     ctx.putImageData(new ImageData(bits, width, height), 0, 0);
 }
 
+const green = (imageData) => {
+    const { data, width, height } = imageData;
+    const ctx = getCanvasContext("green")
+    const bits = new Uint8ClampedArray(data.length);
+
+    for (let i = 0; i < bits.length; i += 4) {
+        bits[i] = data[i];
+        bits[i + 1] = 255;
+        bits[i + 2] = data[i+2];
+        bits[i + 3] = data[i+3];
+    }
+
+    ctx.putImageData(new ImageData(bits, width, height), 0, 0);
+}
+
+const blue = (imageData) => {
+    const { data, width, height } = imageData;
+    const ctx = getCanvasContext("blue")
+    const bits = new Uint8ClampedArray(data.length);
+
+    for (let i = 0; i < bits.length; i += 4) {
+        bits[i] = data[i];
+        bits[i + 1] = data[i+1];
+        bits[i + 2] = 255;
+        bits[i + 3] = data[i+3];
+    }
+
+    ctx.putImageData(new ImageData(bits, width, height), 0, 0);
+}
+
+const yellow = (imageData) => {
+    const { data, width, height } = imageData;
+    const ctx = getCanvasContext("yellow")
+    const bits = new Uint8ClampedArray(data.length);
+
+    for (let i = 0; i < bits.length; i += 4) {
+        bits[i] = data[i];
+        bits[i + 1] = data[i+1];
+        bits[i + 2] = 0;
+        bits[i + 3] = data[i+3];
+    }
+
+    ctx.putImageData(new ImageData(bits, width, height), 0, 0);
+}
+
 const grayscale = (imageData) => {
     const { data, width, height } = imageData;
     const ctx = getCanvasContext("grayscale")
@@ -261,10 +306,13 @@ lenna.onload = () => {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
     red(imageData);
+    green(imageData);
+    blue(imageData);
+    yellow(imageData);
+    microsoft(imageData);
     grayscale(imageData);
     blackwhite(imageData);
     sepia(imageData);
-    microsoft(imageData);
     noise(imageData);
     noise2(imageData);
     noise3(imageData);
