@@ -76,5 +76,5 @@ export const noise3 = (source) => {
         bits[i + 3] = a;
     }
 
-    return new ImageData(bits, width, height)
+    return new ImageData(bits, width, height);
 }
