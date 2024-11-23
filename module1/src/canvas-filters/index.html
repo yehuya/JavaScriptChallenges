@@ -9,10 +9,15 @@
 </head>
 
 <body>
+    <h1>The Filters Museum</h1>
     <div id="app">
         <div>
             <canvas id="original"></canvas>
             <p>Original</p>
+        </div>
+        <div>
+            <canvas id="invert"></canvas>
+            <p>Invert</p>
         </div>
         <div>
             <canvas id="red"></canvas>
@@ -39,7 +44,7 @@
             <p>Grayscale</p>
         </div>
         <div>
-            <canvas id="blackwhite"></canvas>
+            <canvas id="blackAndWhite"></canvas>
             <p>Threshold (black & white)</p>
         </div>
         <div>
@@ -47,7 +52,7 @@
             <p>Sepia</p>
         </div>
         <div>
-            <canvas id="noise"></canvas>
+            <canvas id="noise1"></canvas>
             <p>Noise</p>
         </div>
         <div>
@@ -59,15 +64,23 @@
             <p>Noisy image animation</p>
         </div>
         <div>
-            <canvas id="opacity"></canvas>
-            <p>Opacity</p>
+            <canvas id="sobelY"></canvas>
+            <p>SobelY</p>
+        </div>
+        <div>
+            <canvas id="sobelX"></canvas>
+            <p>SobelX</p>
         </div>
         <div>
             <canvas id="sobel"></canvas>
             <p>Sobel</p>
         </div>
+        <div>
+            <canvas id="opacity"></canvas>
+            <p>Opacity</p>
+        </div>
     </div>
-    <script src="./script.js"></script>
+    <script src="./script.js" type="module"></script>
 </body>
 
 </html>
