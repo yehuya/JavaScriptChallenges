@@ -110,3 +110,18 @@ export const mask6 = (maskSource, backgroundSource, threshold = 100) => {
 
     return dist;
 }
+
+export const mask7 = (maskSource, backgroundSource, threshold = 100) => {
+    const dist = cloneImageData(backgroundSource);
+    const mask = blackAndWhite(maskSource, threshold);
+
+    for (let i = 0; i < dist.data.length; i += 4) {
+        const maskVal = mask.data[i];
+
+        if(maskVal !== 255){
+            dist.data[i+3] *= 0.4;
+        }
+    }
+
+    return dist;
+}
