@@ -1,109 +1,91 @@
 import { grayscale } from "./colors";
 
-const getPixel = (imageData, x, y) => {
-    const { data, width } = imageData;
+const matrixSobelX = [
+    -1, 0, 1,
+    -2, 0, 2,
+    -1, 0, 1
+];
+
+const matrixSobelY = [
+    -1, -2, -1,
+    0, 0, 0,
+    1, 2, 1
+];
+
+const getPixel = (source, x, y) => {
+    const { data, width } = source;
     const i = (y * width + x) * 4;
     return data[i];
 }
 
-const applyKernel = (imageData, cb) => {
-    const { data, width, height } = imageData;
-    const bit = new Uint8ClampedArray(data.length);
+const applyKernel = (source, cb) => {
+    const { data, width, height } = source;
+    const dist = new Uint8ClampedArray(data.length);
 
     for(let x = 0 ; x < width ; x++) {
         for(let y = 0 ; y < height ; y++) {
             const matrix = [
-                [getPixel(imageData, x - 1, y - 1), getPixel(imageData, x, y - 1), getPixel(imageData, x + 1, y - 1)],
-                [getPixel(imageData, x - 1, y), getPixel(imageData, x, y), getPixel(imageData, x + 1, y)],
-                [getPixel(imageData, x - 1, y + 1), getPixel(imageData, x, y + 1), getPixel(imageData, x + 1, y + 1)]
+                [getPixel(source, x - 1, y - 1), getPixel(source, x, y - 1), getPixel(source, x + 1, y - 1)],
+                [getPixel(source, x - 1, y), getPixel(source, x, y), getPixel(source, x + 1, y)],
+                [getPixel(source, x - 1, y + 1), getPixel(source, x, y + 1), getPixel(source, x + 1, y + 1)]
             ];
 
             const value = cb(matrix);
 
-            bit[(y * width + x) * 4] = value;
-            bit[(y * width + x) * 4 + 1] = value;
-            bit[(y * width + x) * 4 + 2] = value;
-            bit[(y * width + x) * 4 + 3] = 255;
+            dist[(y * width + x) * 4] = value;
+            dist[(y * width + x) * 4 + 1] = value;
+            dist[(y * width + x) * 4 + 2] = value;
+            dist[(y * width + x) * 4 + 3] = 255;
         }
     }
 
-    return new ImageData(bit, width, height);
+    return new ImageData(dist, width, height);
 }
 
-export const sobelY = (source) => {
-    const sobelY = [
-        -1, -2, -1,
-        0, 0, 0,
-        1, 2, 1
-    ];
+export const sobelY = (source) => applyKernel(grayscale(source), (matrix) => {
+    let pixelY = 0;
 
-    return applyKernel(grayscale(source), (matrix) => {
-        let pixelY = 0;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const pixel = matrix[i][j];
+            const weightY = matrixSobelY[i * 3 + j];
 
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const pixel = matrix[i][j];
-                const weightY = sobelY[i * 3 + j];
-
-                pixelY += pixel * weightY;
-            }
+            pixelY += pixel * weightY;
         }
+    }
 
-        return pixelY;
-    });
-}
+    return pixelY;
+});
 
-export const sobelX = (source) => {
-    const sobelX = [
-        -1, 0, 1,
-        -2, 0, 2,
-        -1, 0, 1
-    ];
+export const sobelX = (source) => applyKernel(grayscale(source), (matrix) => {
+    let pixelX = 0;
 
-    return applyKernel(grayscale(source), (matrix) => {
-        let pixelX = 0;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const pixel = matrix[i][j];
+            const weightX = matrixSobelX[i * 3 + j];
 
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const pixel = matrix[i][j];
-                const weightX = sobelX[i * 3 + j];
-
-                pixelX += pixel * weightX;
-            }
+            pixelX += pixel * weightX;
         }
+    }
 
-        return pixelX
-    });
-}
+    return pixelX
+});
 
-export const sobel = (source) => {
-    const sobelX = [
-        -1, 0, 1,
-        -2, 0, 2,
-        -1, 0, 1
-    ];
+export const sobel = (source) => applyKernel(grayscale(source), (matrix) => {
+    let pixelX = 0;
+    let pixelY = 0;
 
-    const sobelY = [
-        -1, -2, -1,
-        0, 0, 0,
-        1, 2, 1
-    ];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const pixel = matrix[i][j];
+            const weightX = matrixSobelX[i * 3 + j];
+            const weightY = matrixSobelY[i * 3 + j];
 
-    return applyKernel(grayscale(source), (matrix) => {
-        let pixelX = 0;
-        let pixelY = 0;
-
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                const pixel = matrix[i][j];
-                const weightX = sobelX[i * 3 + j];
-                const weightY = sobelY[i * 3 + j];
-
-                pixelX += pixel * weightX;
-                pixelY += pixel * weightY;
-            }
+            pixelX += pixel * weightX;
+            pixelY += pixel * weightY;
         }
+    }
 
-        return Math.sqrt(pixelX**2 + pixelY**2);
-    });
-}
+    return Math.sqrt(pixelX**2 + pixelY**2);
+});
