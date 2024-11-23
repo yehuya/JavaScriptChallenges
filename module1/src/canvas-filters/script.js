@@ -1,7 +1,7 @@
 import {red, green, blue, yellow, invert, grayscale, blackAndWhite, sepia } from "./filters/colors";
 import { microsoft } from "./filters/microsoft";
 import { opacity } from "./filters/opacity";
-import { mask1, mask2, mask3, mask4, mask5 } from "./filters/mask";
+import { mask1, mask2, mask3, mask4, mask5, mask6 } from "./filters/masks";
 import { sobel, sobelX, sobelY} from "./filters/sobel"
 import { noise1, noise2, noise3} from "./filters/noises";
 import { filter, applyFilter, applyAnimation, loadImages, getCanvasContext } from "./canvas";
@@ -56,6 +56,7 @@ const maskFilters = () => {
         applyAnimation("mask3", mask3),
         applyAnimation("mask4", mask4),
         applyAnimation("mask5", mask5),
+        applyAnimation("mask6", mask6),
     ];
     
     const ctxMask = getCanvasContext('originalMask');
