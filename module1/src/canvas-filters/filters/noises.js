@@ -10,7 +10,7 @@ export const noise1 = (source) => {
 
         const currentPixel = i/4;
         const x = currentPixel % width;
-        const y = (currentPixel - x) / width;
+        const y = Math.floor(currentPixel / width);
 
         if(x > width / 4 && x < (width / 4 * 3) && y > height / 4 && y < (height / 4 * 3)) {
             dist[i] = r;
@@ -41,7 +41,7 @@ export const noise2 = (source) => {
 
         const currentPixel = i/4;
         const x = currentPixel % width;
-        const y = (currentPixel - x) / width;
+        const y = Math.floor(currentPixel / width)
 
         if(x > width / 4 && x < (width / 4 * 3) && y > height / 4 && y < (height / 4 * 3)) {
             dist[i] = r;

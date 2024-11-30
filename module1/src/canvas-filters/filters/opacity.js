@@ -9,7 +9,7 @@ export const opacity = (source) => {
 
         const currentPixel = i / 4;
         const x = currentPixel % width;
-        const y = (currentPixel - x) / width;
+        const y = Math.floor(currentPixel / width);
 
         const opacityY = (y / height) * 255;
         const opacityX = (x / width) * 255;
