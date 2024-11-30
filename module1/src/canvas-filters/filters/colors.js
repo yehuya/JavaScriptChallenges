@@ -4,7 +4,8 @@ export const red = (source) => {
     const dist = cloneImageData(source);
 
     for (let i = 0; i < dist.data.length; i += 4) {
-        dist.data[i] = 255;
+        dist.data[i+1] = 0;
+        dist.data[i+2] = 0;
     }
 
     return dist;
@@ -14,7 +15,8 @@ export const green = (source) => {
     const dist = cloneImageData(source);
     
     for (let i = 0; i < dist.data.length; i += 4) {
-        dist.data[i+1] = 255;
+        dist.data[i] = 0;
+        dist.data[i+2] = 0;
     }
 
     return dist;
@@ -24,7 +26,8 @@ export const blue = (source) => {
     const dist = cloneImageData(source);
     
     for (let i = 0; i < dist.data.length; i += 4) {
-        dist.data[i+2] = 255;
+        dist.data[i] = 0;
+        dist.data[i+1] = 0;
     }
 
     return dist;
@@ -34,8 +37,6 @@ export const yellow = (source) => {
     const dist = cloneImageData(source);
     
     for (let i = 0; i < dist.data.length; i += 4) {
-        dist.data[i] *= 2.5;
-        dist.data[i+1] *= 2.5;
         dist.data[i+2] = 0;
     }
 
