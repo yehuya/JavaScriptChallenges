@@ -3,7 +3,7 @@ import { microsoft } from "./filters/microsoft";
 import { opacity } from "./filters/opacity";
 import { mask1, mask2, mask3, mask4, mask5, mask6, mask7 } from "./filters/masks";
 import { sobel, sobelX, sobelY} from "./filters/sobel"
-import { noise1, noise2, noise3} from "./filters/noises";
+import { noise1, noise2, noise3, noise4} from "./filters/noises";
 import { filter, applyFilter, applyAnimation, loadImages, getCanvasContext } from "./canvas";
 
 const [lenna, iloveu, bg] = await loadImages([
@@ -24,11 +24,12 @@ const lennaFilters = () => {
         applyFilter("sepia", sepia),
         applyFilter("noise1", noise1),
         applyFilter("noise2", noise2),
+        applyFilter("noise3", noise3),
         applyFilter("opacity", opacity),
         applyFilter("sobelY", sobelY),
         applyFilter("sobelX", sobelX),
         applyFilter("sobel", sobel),
-        applyAnimation("noise3", noise3),
+        applyAnimation("noise4", noise4),
         filter("microsoft", microsoft),
     ];
     
