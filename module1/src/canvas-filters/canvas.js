@@ -15,13 +15,13 @@ export const applyFilter = (canvasId, filter) => (...args) => {
     ctx.putImageData(filter.apply(null, args), 0, 0);
 }
 
-export const applyAnimation = (canvasId, filter, timeout = 100) => (...args) => {
+export const applyAnimation = (canvasId, filter) => (...args) => {
+    const ctx = getCanvasContext(canvasId);
+
     const animation = () => {
-        const ctx = getCanvasContext(canvasId);
         ctx.putImageData(filter.apply(null, args), 0, 0);
-    
-        setTimeout(() => requestAnimationFrame(animation), timeout);
-    }
+        requestAnimationFrame(animation);
+    };
 
     requestAnimationFrame(animation);
 }
