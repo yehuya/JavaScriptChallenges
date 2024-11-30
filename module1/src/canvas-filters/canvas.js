@@ -15,6 +15,13 @@ export const applyFilter = (canvasId, filter) => (...args) => {
     ctx.putImageData(filter.apply(null, args), 0, 0);
 }
 
+export const applyFilterOffscreen = (canvasId, filter, worker) => async (imageData) => {
+    const offscreen = document.getElementById(canvasId).transferControlToOffscreen()
+    const bitmap = await createImageBitmap(imageData);
+
+    worker.postMessage({ canvas: offscreen, bitmap, filterName: filter.name }, [offscreen]);
+}
+
 export const applyAnimation = (canvasId, filter) => (...args) => {
     const ctx = getCanvasContext(canvasId);
 
