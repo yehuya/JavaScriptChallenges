@@ -1,9 +1,12 @@
 import {noise1, noise2, noise3} from "./filters/noises";
+import {sharpen, gaussianBlur} from "./filters/kernel";
 
 const filtersMap = {
     noise1,
     noise2,
     noise3,
+    sharpen,
+    gaussianBlur,
 }
 
 globalThis.onmessage = (e) => {

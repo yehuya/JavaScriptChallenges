@@ -1,6 +1,6 @@
 import { cloneImageData } from "../canvas";
 import { blackAndWhite } from "./colors";
-import { sobel } from "./sobel";
+import { sobel } from "./kernel";
 
 export const mask1 = (maskSource, backgroundSource, threshold = 100) => {
     const dist = cloneImageData(backgroundSource);

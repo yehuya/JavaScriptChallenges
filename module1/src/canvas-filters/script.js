@@ -2,11 +2,12 @@ import {red, green, blue, yellow, invert, grayscale, blackAndWhite, sepia } from
 import { microsoft } from "./filters/microsoft";
 import { opacity } from "./filters/opacity";
 import { mask1, mask2, mask3, mask4, mask5, mask6, mask7 } from "./filters/masks";
-import { sobel, sobelX, sobelY} from "./filters/sobel"
+import { sobel, sobelX, sobelY, sharpen, gaussianBlur} from "./filters/kernel";
 import { noise1, noise2, noise3, noise4} from "./filters/noises";
 import { filter, applyFilter, applyFilterOffscreen, applyAnimation, loadImages, getCanvasContext } from "./canvas";
 
-const worker = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
+const worker1 = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
+const worker2 = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
 
 const [lenna, iloveu, bg] = await loadImages([
     "https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png",
@@ -24,9 +25,11 @@ const lennaFilters = () => {
         applyFilter("grayscale", grayscale),
         applyFilter("blackAndWhite", blackAndWhite),
         applyFilter("sepia", sepia),
-        applyFilterOffscreen("noise1", noise1, worker),
-        applyFilterOffscreen("noise2", noise2, worker),
-        applyFilterOffscreen("noise3", noise3, worker),
+        applyFilterOffscreen("noise1", noise1, worker1),
+        applyFilterOffscreen("noise2", noise2, worker1),
+        applyFilterOffscreen("noise3", noise3, worker1),
+        applyFilterOffscreen("sharpen", sharpen, worker2),
+        applyFilterOffscreen("gaussianBlur", gaussianBlur, worker2),
         applyFilter("opacity", opacity),
         applyFilter("sobelY", sobelY),
         applyFilter("sobelX", sobelX),
