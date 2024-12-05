@@ -33,6 +33,13 @@ export const applyAnimation = (canvasId, filter) => (...args) => {
     requestAnimationFrame(animation);
 }
 
+export const setCanvasSize = (selector, width, height) => {
+    [...document.querySelectorAll(selector)].forEach(canvas => {
+        canvas.width = width;
+        canvas.height = height;
+    });
+}
+
 export const loadImages = (arr) => {
     const images = arr.map(src => {
         return new Promise((resolve) => {

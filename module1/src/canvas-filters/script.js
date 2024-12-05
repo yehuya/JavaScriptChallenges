@@ -4,7 +4,7 @@ import { opacity } from "./filters/opacity";
 import { mask1, mask2, mask3, mask4, mask5, mask6, mask7 } from "./filters/masks";
 import { sobel, sobelX, sobelY, sharpen, gaussianBlur} from "./filters/kernel";
 import { noise1, noise2, noise3, noise4} from "./filters/noises";
-import { filter, applyFilter, applyFilterOffscreen, applyAnimation, loadImages, getCanvasContext } from "./canvas";
+import { filter, applyFilter, applyFilterOffscreen, applyAnimation, loadImages, getCanvasContext, setCanvasSize } from "./canvas";
 import flowerSrc from "./images/flower.jpg";
 import maskSrc from "./images/mask.jpg";
 import bgSrc from "./images/bg.jpg";
@@ -37,11 +37,7 @@ const flowerFilters = () => {
         filter("microsoft", microsoft),
     ];
     
-    const canvases = [...document.querySelectorAll(".flower canvas")];
-    canvases.forEach(canvas => {
-        canvas.width = flower.width;
-        canvas.height = flower.height;
-    });
+    setCanvasSize(".flower canvas", flower.width, flower.height);
     
     const ctx = getCanvasContext("original-flower");
     ctx.drawImage(flower, 0, 0);
@@ -66,19 +62,15 @@ const maskFilters = () => {
     ];
     
     const ctxMask = getCanvasContext('original-mask');
-    const ctxBG = getCanvasContext('original-bg');
+    const ctxBg = getCanvasContext('original-bg');
 
-    const canvases = [...document.querySelectorAll(".mask canvas")];
-    canvases.forEach(canvas => {
-        canvas.width = mask.width;
-        canvas.height = mask.height;
-    });
+    setCanvasSize(".mask canvas", mask.width, mask.height);
 
     ctxMask.drawImage(mask, 0, 0);
-    ctxBG.drawImage(bg, 0, 0, mask.width, mask.height);
+    ctxBg.drawImage(bg, 0, 0, mask.width, mask.height);
 
     const maskImageData = ctxMask.getImageData(0, 0, mask.width, mask.height);
-    const bgImageData = ctxBG.getImageData(0, 0, mask.width, mask.height);
+    const bgImageData = ctxBg.getImageData(0, 0, mask.width, mask.height);
 
     filters.forEach(filter => filter(maskImageData, bgImageData));
 }
