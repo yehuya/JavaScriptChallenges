@@ -74,7 +74,7 @@ export const grayscale = (source) => {
     return new ImageData(arr, width, height);
 }
 
-export const blackAndWhite = (source, threshold = 130) => {
+export const blackAndWhite = (source, threshold = 150) => {
     const dist = grayscale(source);
     const { data } = dist;
 

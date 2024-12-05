@@ -5,17 +5,18 @@ import { mask1, mask2, mask3, mask4, mask5, mask6, mask7 } from "./filters/masks
 import { sobel, sobelX, sobelY, sharpen, gaussianBlur} from "./filters/kernel";
 import { noise1, noise2, noise3, noise4} from "./filters/noises";
 import { filter, applyFilter, applyFilterOffscreen, applyAnimation, loadImages, getCanvasContext } from "./canvas";
+import flowerSrc from "./images/flower.jpg";
 
 const worker1 = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
 const worker2 = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
 
-const [lenna, iloveu, bg] = await loadImages([
-    "https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png",
+const [flower, iloveu, bg] = await loadImages([
+    flowerSrc,
     "https://images.pexels.com/photos/3825303/pexels-photo-3825303.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     "https://images.pexels.com/photos/750854/pexels-photo-750854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
 ]);
 
-const lennaFilters = () => {
+const flowerFilters = () => {
     const filters = [
         applyFilter("invert", invert),
         applyFilter("red", red),
@@ -38,21 +39,21 @@ const lennaFilters = () => {
         filter("microsoft", microsoft),
     ];
     
-    const canvases = [...document.querySelectorAll(".lenna canvas")];
+    const canvases = [...document.querySelectorAll(".flower canvas")];
     canvases.forEach(canvas => {
-        canvas.width = lenna.width;
-        canvas.height = lenna.height;
+        canvas.width = flower.width;
+        canvas.height = flower.height;
     });
     
     const ctx = getCanvasContext("original");
-    ctx.drawImage(lenna, 0, 0);
+    ctx.drawImage(flower, 0, 0);
     
-    const imageData = ctx.getImageData(0, 0, lenna.width, lenna.height);
+    const imageData = ctx.getImageData(0, 0, flower.width, flower.height);
     
     filters.forEach(filter => filter(imageData));
 }
 
-lennaFilters();
+flowerFilters();
 
 
 const maskFilters = () => {
