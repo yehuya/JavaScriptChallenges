@@ -4,50 +4,43 @@ html, body {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-body {
-    border: 1rem solid black;
-    box-sizing: border-box;
-}
-
-#upload label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70vw;
-    height: 70vh;
-    border: .3rem dashed black;
-    border-radius: 1rem;
-    cursor: pointer;
-    font-size: 2rem;
-}
-
-#upload input {
-    display: none;
-}
-
-#app {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(80vh - 3rem);
-    gap: 1rem;
-}
-
-img, canvas {
-    max-width: calc(50vw - 3rem);
-    max-height: 100%;
-}
-
-#clock {
-    font-size: 2rem;
+h1 {
+    padding: 0;
+    font-size: 3rem;
+    margin: 3rem 3rem 0 3rem;
     font-weight: bold;
 }
-.metadata {
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    gap: .6rem;
-    align-items: center;
-    justify-content: center;
-    height: 10vh;
+
+h2 {
+    padding: 0;
+    font-size: 2rem;
+    margin: 0 3rem;
+    font-weight: bold;
+}
+
+.grid {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding: 3rem;
+}
+
+.grid div {
+    place-self: center;
+    box-shadow: 0 0 1rem 0px rgba(0, 0, 0, 0.2);
+}
+
+.grid div p {
+    background: black;
+    color: white;
+    padding: 1rem;
+    box-sizing: border-box;
+    margin: 0;
+    width: 100%;
+}
+
+.grid div canvas {
+    display: block;
+    max-width: 100%;
 }

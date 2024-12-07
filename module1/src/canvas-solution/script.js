@@ -1,51 +1,78 @@
+import {red, green, blue, yellow, invert, grayscale, blackAndWhite, sepia } from "./filters/colors";
+import { microsoft } from "./filters/microsoft";
+import { opacity } from "./filters/opacity";
+import { mask1, mask2, mask3, mask4, mask5, mask6, mask7 } from "./filters/masks";
+import { sobel, sobelX, sobelY, sharpen, gaussianBlur} from "./filters/kernel";
+import { noise1, noise2, noise3, noise4} from "./filters/noises";
+import { filter, applyFilter, applyFilterOffscreen, applyAnimation, loadImages, getCanvasContext, setCanvasSize } from "./canvas";
+import flowerSrc from "./images/flower.jpg";
+import maskSrc from "./images/mask.jpg";
+import bgSrc from "./images/bg.jpg";
 
-const message = document.getElementById("message");
-const file = document.getElementById("file");
-const img = document.getElementById("img")
-const app = document.getElementById("app");
-const clock = document.getElementById("clock");
+const worker1 = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
+const worker2 = new Worker(new URL("./worker.js", import.meta.url), { type: "module" });
 
-const worker = new Worker(new URL("./worker.js", import.meta.url));
-worker.onmessage = (event) => {
-    message.textContent = event.data;
+const [flower, mask, bg] = await loadImages([flowerSrc, maskSrc, bgSrc]);
+
+const flowerFilters = () => {
+    const filters = [
+        applyFilter("invert", invert),
+        applyFilter("red", red),
+        applyFilter("green", green),
+        applyFilter("blue", blue),
+        applyFilter("yellow", yellow),
+        applyFilter("grayscale", grayscale),
+        applyFilter("binary", blackAndWhite),
+        applyFilter("sepia", sepia),
+        applyFilterOffscreen("noise1", noise1, worker1),
+        applyFilterOffscreen("noise2", noise2, worker1),
+        applyFilterOffscreen("noise3", noise3, worker1),
+        applyFilterOffscreen("sharpen", sharpen, worker2),
+        applyFilterOffscreen("gaussian-blur", gaussianBlur, worker2),
+        applyFilter("opacity", opacity),
+        applyFilter("sobelY", sobelY),
+        applyFilter("sobelX", sobelX),
+        applyFilter("sobel", sobel),
+        applyAnimation("noise4", noise4),
+        filter("microsoft", microsoft),
+    ];
+    
+    setCanvasSize(".flower canvas", flower.width, flower.height);
+    
+    const ctx = getCanvasContext("original-flower");
+    ctx.drawImage(flower, 0, 0);
+    
+    const imageData = ctx.getImageData(0, 0, flower.width, flower.height);
+    
+    filters.forEach(filter => filter(imageData));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    setInterval(() => {
-        const date = new Date();
-        const hours = `${date.getHours()}0`.slice(0, 2);
-        const minutes = `${date.getMinutes()}0`.slice(0, 2);
-        const seconds = `${date.getSeconds()}0`.slice(0, 2);
-        const milliseconds = `${date.getMilliseconds()}000`.slice(0, 3);
+flowerFilters();
 
-        clock.textContent = `${hours}:${minutes}:${seconds}.${milliseconds}`;
-    });
-});
 
-file.addEventListener("change", (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+const maskFilters = () => {
+    const filters = [
+        applyFilter("mask1", mask1),
+        applyFilter("mask2", mask2),
+        applyFilter("mask3", mask3),
+        applyFilter("mask4", mask4),
+        applyAnimation("mask5", mask5),
+        applyFilter("mask6", mask6),
+        applyFilter("mask7", mask7),
+    ];
+    
+    const ctxMask = getCanvasContext('original-mask');
+    const ctxBg = getCanvasContext('original-bg');
 
-    reader.onload = async (event) => {
-        const canvas = document.createElement("canvas");
-        const img = new Image();
+    setCanvasSize(".mask canvas", mask.width, mask.height);
 
-        app.innerHTML = "";
-        app.appendChild(img);
-        app.appendChild(canvas);
-  
-        img.onload = async () => {
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
+    ctxMask.drawImage(mask, 0, 0);
+    ctxBg.drawImage(bg, 0, 0, mask.width, mask.height);
 
-            const offscreen = canvas.transferControlToOffscreen();
-            const bitmap = await createImageBitmap(img);
-            
-            worker.postMessage({ canvas: offscreen, bitmap }, [offscreen]);
-        }
+    const maskImageData = ctxMask.getImageData(0, 0, mask.width, mask.height);
+    const bgImageData = ctxBg.getImageData(0, 0, mask.width, mask.height);
 
-        img.src = event.target.result;      
-    }
+    filters.forEach(filter => filter(maskImageData, bgImageData));
+}
 
-    reader.readAsDataURL(file);
-});
+maskFilters();

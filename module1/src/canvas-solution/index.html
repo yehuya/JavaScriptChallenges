@@ -1,21 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Challenges | Module 1 Canvas Solution</title>
+    <title>JavaScript Challenges | Module 1 Canvas</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-    <div id="clock" class="metadata"></div>
-    <div id="app">
-        <div id="upload">
-            <label for="file">Upload image
-                <input type="file" id="file" accept="image/*">
-            </label>
+    <h1>The Filters Museum</h1>
+    <div class="grid flower">
+        <div>
+            <canvas id="original-flower"></canvas>
+            <p>Original flower</p>
         </div>
     </div>
-    <div id="message" class="metadata"></div>
+    <h2>Colors</h2>
+    <div class="grid flower">
+        <div>
+            <canvas id="invert"></canvas>
+            <p>Invert</p>
+        </div>
+        <div>
+            <canvas id="red"></canvas>
+            <p>Red</p>
+        </div>
+        <div>
+            <canvas id="green"></canvas>
+            <p>Green</p>
+        </div>
+        <div>
+            <canvas id="blue"></canvas>
+            <p>Blue</p>
+        </div>
+        <div>
+            <canvas id="yellow"></canvas>
+            <p>Yellow</p>
+        </div>
+        <div>
+            <canvas id="microsoft"></canvas>
+            <p>Microsoft</p>
+        </div>
+        <div>
+            <canvas id="grayscale"></canvas>
+            <p>Grayscale</p>
+        </div>
+        <div>
+            <canvas id="binary"></canvas>
+            <p>Black & White (binary)</p>
+        </div>
+        <div>
+            <canvas id="sepia"></canvas>
+            <p>Sepia</p>
+        </div>
+    </div>
+    <h2>Noise</h2>
+    <div class="grid flower">
+        <div>
+            <canvas id="noise1"></canvas>
+            <p>Noise</p>
+        </div>
+        <div>
+            <canvas id="noise2"></canvas>
+            <p>Noise - clamped</p>
+        </div>
+        <div>
+            <canvas id="noise3"></canvas>
+            <p>Noise - Black & White</p>
+        </div>
+        <div>
+            <canvas id="noise4"></canvas>
+            <p>CRT noise animation</p>
+        </div>
+    </div>
+    <h2>Kernels</h2>
+    <div class="grid flower">
+        <div>
+            <canvas id="sharpen"></canvas>
+            <p>Sharpen</p>
+        </div>
+        <div>
+            <canvas id="gaussian-blur"></canvas>
+            <p>Gaussian blur</p>
+        </div>
+        <div>
+            <canvas id="sobelY"></canvas>
+            <p>SobelY</p>
+        </div>
+        <div>
+            <canvas id="sobelX"></canvas>
+            <p>SobelX</p>
+        </div>
+        <div>
+            <canvas id="sobel"></canvas>
+            <p>Sobel</p>
+        </div>
+        <div>
+            <canvas id="opacity"></canvas>
+            <p>Opacity</p>
+        </div>
+    </div>
+    <h2>Masks</h2>
+    <div class="grid mask">
+        <div>
+            <canvas id="original-mask"></canvas>
+            <p>Original mask</p>
+        </div>
+        <div>
+            <canvas id="original-bg"></canvas>
+            <p>Original background</p>
+        </div>
+        <div>
+            <canvas id="mask1"></canvas>
+            <p>I love you - mask1</p>
+        </div>
+        <div>
+            <canvas id="mask2"></canvas>
+            <p>I love you - mask2 - gradient</p>
+        </div>
+        <div>
+            <canvas id="mask3"></canvas>
+            <p>I love you - mask3</p>
+        </div>
+        <div>
+            <canvas id="mask4"></canvas>
+            <p>I love you - mask4 - edges</p>
+        </div>
+        <div>
+            <canvas id="mask5"></canvas>
+            <p>I love you - mask5 - edges + animation</p>
+        </div>
+        <div>
+            <canvas id="mask6"></canvas>
+            <p>I love you - mask6</p>
+        </div>
+        <div>
+            <canvas id="mask7"></canvas>
+            <p>I love you - mask7 - opacity</p>
+        </div>
+    </div>
     <script src="./script.js" type="module"></script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-import flowerSrc from "./../canvas-filters/images/flower.jpg";
+import flowerSrc from "../canvas-solution/images/flower.jpg";
 
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
