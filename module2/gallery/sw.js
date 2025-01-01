@@ -16,7 +16,7 @@ const cacheFirst = async (request) => {
 
         return responseFromNetwork;
     } catch (error) {
-        return new Response('{error: "Network Error}', {
+        return new Response('Network Error', {
             status: 408,
             headers: { 'Content-Type': 'text/plain' },
         });
