@@ -1,5 +1,5 @@
 window.navigator.serviceWorker.register(new URL('./sw.js', import.meta.url), {
-    scope: "/module2/gallery/"
+    scope: "/module2/gallery-solution/"
 });
 
 const gallery = document.getElementById("gallery");
@@ -16,5 +16,3 @@ urls.forEach(url => {
     img.src = url;
     gallery.append(img);
 });
-
-window.addEventListener("load", () => console.log(`Page load time: ${performance.now()}`));

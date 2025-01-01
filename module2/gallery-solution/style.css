@@ -7,13 +7,26 @@ html, body {
 h1 {
     padding: 0;
     font-size: 3rem;
-    margin: 3rem;
+    margin: 3rem 0;
     font-weight: bold;
+}
+
+.margin {
+    margin: 0 3rem;
+}
+
+mark {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+a {
+    display: block;
 }
 
 #gallery {
     display: grid;
-    padding: 0 3rem;
+    padding: 1rem 3rem;
     box-sizing: border-box;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
@@ -22,4 +35,8 @@ h1 {
 #gallery img {
     display: block;
     max-width: 100%;
+}
+
+#gallery img.wide {
+    grid-column: span 4;
 }
