@@ -1,19 +1,20 @@
+window.navigator.serviceWorker.register(new URL('./sw.js', import.meta.url), {
+    scope: "/module2/gallery/"
+});
+
 const gallery = document.getElementById("gallery");
-const images = [];
+const urls = [];
 
-window.addEventListener('load', () => console.timeEnd("PageLoadLoadingTime"))
-
-for(let i = 0 ; i < 100 ; i++) {
-    images.push(`https://picsum.photos/id/${i}/500/500?x=${new Date().getTime()}`);
+for(let i = 0 ; i < 9000000 ; i+= 12345) {
+    const color = i.toString(16).padStart(6, '0');
+    urls.push(`https://placehold.co/600x600/${color}/FFFFFF/png?no_cache=${new Date().getTime()}`)
 }
 
-images.map(src => {
+urls.forEach(url => {
     const img = new Image();
     img.onerror = () => img.parentElement.removeChild(img);
-    img.src = src;
+    img.src = url;
     gallery.append(img);
 });
 
-window.addEventListener("load", () => {
-    console.log(`Page load time: ${performance.now()}`)
-});
+window.addEventListener("load", () => console.log(`Page load time: ${performance.now()}`));
