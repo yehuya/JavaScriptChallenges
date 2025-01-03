@@ -5,7 +5,6 @@ canvas.width = 800;
 canvas.height = 600;
 
 const BLOCK_SIZE = 20;
-const STORAGE_KEY = "state";
 
 // Colors
 const COLORS = {
@@ -28,8 +27,6 @@ const startState = {
     speed: 150,
 }
 
-sessionStorage.getItem(STORAGE_KEY) ? loadState() : resetGame();
-
 // Utility functions
 function getRandomPosition(max) {
     return Math.floor(Math.random() * (max / BLOCK_SIZE)) * BLOCK_SIZE;
@@ -48,34 +45,6 @@ function drawText(text, color, x, y, size = 20) {
 
 function resetGame() {
     state = structuredClone(startState);
-    sessionStorage.removeItem(STORAGE_KEY)
-}
-
-function loadState() {
-    state = JSON.parse(sessionStorage.getItem(STORAGE_KEY));
-}
-
-function saveState() {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
-function saveScore() {
-    const scores = JSON.parse(localStorage.getItem("scores")) || [];
-    scores.push(state.score);
-    scores.sort((a, b) => b - a);
-    scores.splice(3);
-    localStorage.setItem("scores", JSON.stringify(scores));
-
-    loadScores();
-}
-
-function loadScores() {
-    const scores = JSON.parse(localStorage.getItem("scores")) || [];
-    const scoreList = Array.from(document.querySelectorAll("#topScores span"));
-    
-    scores.forEach((score, i) => {
-        scoreList[i].textContent = score;
-    });
 }
 
 // Game loop
@@ -164,14 +133,12 @@ document.addEventListener("keydown", (event) => {
         resetGame();
         gameLoop();
     } else if (["r","R"].includes(event.key) && state.stop) {
-        loadState();
         state.stop = false;
         gameLoop();
     } else if (["s","S"].includes(event.key)) {
         state.stop = true;
-        setTimeout(() => saveState())
     }
 });
 
-loadScores();
+resetGame();
 gameLoop();

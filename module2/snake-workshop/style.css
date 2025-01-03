@@ -1,0 +1,32 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    background:black;
+    width:100vw;
+    height:100vh;
+    overflow: hidden;
+    color: white;
+}
+
+h1 {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.gameboard {
+    display:flex;
+    margin:0;
+    justify-content:center;
+    align-items:center;
+}
+
+#topScores {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1rem;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+}
