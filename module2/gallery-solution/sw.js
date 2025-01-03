@@ -1,8 +1,8 @@
 const CACHE_VERSION = 'v1';
 
-const cacheFirst = async (request) => {
+const cacheFirst = async (event) => {
     const cache = await caches.open(CACHE_VERSION);
-    const responseFromCache = await cache.match(request, {
+    const responseFromCache = await cache.match(event.request, {
         ignoreSearch: true
     });
 
@@ -11,8 +11,8 @@ const cacheFirst = async (request) => {
     }
 
     try {
-        const responseFromNetwork = await fetch(request.clone());
-        await cache.put(request, responseFromNetwork.clone());
+        const responseFromNetwork = await fetch(event.request.clone());
+        event.waitUntil(cache.put(event.request, responseFromNetwork.clone()));
 
         return responseFromNetwork;
     } catch (error) {
@@ -39,6 +39,4 @@ const addResources = async () => {
 
 self.addEventListener('install', (event) => event.waitUntil(addResources()))
 self.addEventListener('activate', (event) => event.waitUntil(cleanup()));
-self.addEventListener('fetch', (event) => {
-    event.respondWith(cacheFirst(event.request));
-});
+self.addEventListener('fetch', (event) => event.respondWith(cacheFirst(event)));
