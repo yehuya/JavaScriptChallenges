@@ -148,6 +148,8 @@ function gameLoop() {
     }
 }
 
+window.addEventListener("storage", () => loadScores());
+
 // Event listener for controls
 document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp" && state.direction.y === 0) {
