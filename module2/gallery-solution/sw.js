@@ -1,8 +1,8 @@
 const CACHE_VERSION = 'v1';
 
-const cacheFirst = async (event) => {
+const cacheFirst = async (request) => {
     const cache = await caches.open(CACHE_VERSION);
-    const responseFromCache = await cache.match(event.request, {
+    const responseFromCache = await cache.match(request, {
         ignoreSearch: true
     });
 
@@ -11,11 +11,19 @@ const cacheFirst = async (event) => {
     }
 
     try {
-        const responseFromNetwork = await fetch(event.request);
-        event.waitUntil(cache.put(event.request, responseFromNetwork.clone()));
+        const responseFromNetwork = await fetch(request);
+        cache.put(request, responseFromNetwork.clone());
 
         return responseFromNetwork;
     } catch (error) {
+        if(request.url.includes('placehold.co')) {
+            const responseFromFallback = await cache.match('https://placehold.co/2000x2000/FFFF00/000000/png');
+
+            if(responseFromFallback) {
+                return responseFromFallback;
+            }
+        }
+
         return new Response('Network Error', {
             status: 408,
             headers: { 'Content-Type': 'text/plain' },
@@ -40,4 +48,4 @@ const addResources = async () => {
 
 self.addEventListener('install', (event) => event.waitUntil(addResources()))
 self.addEventListener('activate', (event) => event.waitUntil(cleanup()));
-self.addEventListener('fetch', (event) => event.respondWith(cacheFirst(event)));
+self.addEventListener('fetch', (event) => event.respondWith(cacheFirst(event.request)));
