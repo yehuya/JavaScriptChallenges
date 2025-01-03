@@ -21,12 +21,12 @@ const isLoggedIn = () => {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    document.cookie = `loggedIn=true; path=/module2/portal`;
+    document.cookie = `loggedIn=true; path=/module2/portal-solution`;
     isLoggedIn();
 });
 
 logout.addEventListener("click", () => {
-    document.cookie = `loggedIn=; path=/module2/portal; Max-Age=0`;
+    document.cookie = `loggedIn=; path=/module2/portal-solution; Max-Age=0`;
     isLoggedIn();
 });
 
