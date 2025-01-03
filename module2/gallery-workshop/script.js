@@ -7,7 +7,7 @@ const urls = [];
 
 for(let i = 0 ; i < 1000000 ; i+= 12345) {
     const color = i.toString(16).padStart(6, '0');
-    urls.push(`https://placehold.co/600x600/${color}/FFFFFF/png?no_cache=${new Date().getTime()}`)
+    urls.push(`https://placehold.co/600x600/${color}/FFFFFF/png?text=Cache&no_cache=${new Date().getTime()}`)
 }
 
 urls.forEach(url => {
