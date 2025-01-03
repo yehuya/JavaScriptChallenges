@@ -11,7 +11,7 @@ const cacheFirst = async (event) => {
     }
 
     try {
-        const responseFromNetwork = await fetch(event.request.clone());
+        const responseFromNetwork = await fetch(event.request);
         event.waitUntil(cache.put(event.request, responseFromNetwork.clone()));
 
         return responseFromNetwork;
@@ -33,6 +33,7 @@ const cleanup = async () => {
 const addResources = async () => {
     const cache = await caches.open(CACHE_VERSION);
     return cache.addAll([
+        './sub-gallery.html',
         'https://placehold.co/2000x2000/FFFF00/000000/png'
     ]);
 }
