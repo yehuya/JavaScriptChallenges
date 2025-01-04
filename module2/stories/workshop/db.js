@@ -11,9 +11,7 @@ const DB_VERSION = 1;
             - updated
 */
 
-const openConnection = () => new Promise((resolve, reject) => {
-
-});
+const openConnection = () => new Promise((resolve, reject) => {});
 
 const db = await openConnection();
 
