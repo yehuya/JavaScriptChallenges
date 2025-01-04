@@ -1,3 +1,5 @@
+import { addNewStory, getAllStories, searchStoriesByTag, getStoryById, updateStory, deleteStory } from './db.js';
+
 const storiesContainer = document.getElementById('storiesContainer');
 
 const createStory = (storyId, image, tags, description) => {
@@ -5,7 +7,7 @@ const createStory = (storyId, image, tags, description) => {
     story.classList.add('story');
 
     const img = document.createElement('img');
-    img.src = image;
+    img.src = image && URL.createObjectURL(image);
     story.appendChild(img);
 
     const editIcon = document.createElement('button');
@@ -44,15 +46,16 @@ const getStoryFormData = (event) => new Promise((resolve) => {
     const reader = new FileReader();
 
     reader.onload = function (e) {
-        resolve([e.target.result, formData.getAll('tags'), formData.get('description')])
+        const blob = e.target.result.byteLength ? new Blob([e.target.result], { type: formData.get('image').type }) : undefined;
+        resolve([blob, formData.getAll('tags'), formData.get('description')])
     };
 
-    reader.readAsDataURL(formData.get('image'));
+    reader.readAsArrayBuffer(formData.get('image'));
 });
 
 const onFormSubmit = async (event) => {
     const data = await getStoryFormData(event);
-    const storyId = "Change me"; // Replace with actual ID from your database
+    const storyId = await addNewStory(...data);
     const story = createStory(storyId, ...data);
     storiesContainer.appendChild(story);
 
@@ -60,8 +63,14 @@ const onFormSubmit = async (event) => {
 }
 
 const onEditFormSubmit = async (event, storyId, storyElement) => {
-    const data = await getStoryFormData(event);
-    const newStory = createStory(storyId, ...data);
+    const [image, tags, description] = await getStoryFormData(event);
+    const data = { tags, description };
+    if(image) {
+        data.image = image;
+    }
+
+    const story = await updateStory(storyId, data);
+    const newStory = createStory(storyId, story.image, story.tags, story.description);
 
     storyElement.parentNode.replaceChild(newStory, storyElement);
 }
@@ -69,15 +78,22 @@ const onEditFormSubmit = async (event, storyId, storyElement) => {
 const clearFilter = () => {
     document.getElementById('filterInput').value = '';
     storiesContainer.innerHTML = '';
+    loadStories();
 }
 
-const filter = () => {
+const filter = async () => {
     const filterTags = [...document.getElementById('filterInput').selectedOptions].map(o => o.value);
     storiesContainer.innerHTML = '';
+
+    for (const story of await searchStoriesByTag(filterTags)) {
+        const storyElement = createStory(story.id, story.image, story.tags, story.description);
+        storiesContainer.appendChild(storyElement);
+    }
 }
 
-const enterEditMode = (storyEl, tagsElement, descriptionElement) => {
+const enterEditMode = async (storyEl) => {
     const storyId = storyEl.getAttribute('data-storyId');
+    const {description, tags} = await getStoryById(storyId)
     const editForm = document.createElement('form');
     editForm.classList.add('story-form');
 
@@ -95,7 +111,7 @@ const enterEditMode = (storyEl, tagsElement, descriptionElement) => {
     ['#nature', '#travel', '#food', '#sports', '#art'].forEach(tag => {
         const option = document.createElement('option');
         option.textContent = tag;
-        option.selected = tagsElement.textContent.includes(tag);
+        option.selected = tags.includes(tag);
         newTagsInput.appendChild(option);
     });
     editForm.appendChild(newTagsInput);
@@ -104,7 +120,7 @@ const enterEditMode = (storyEl, tagsElement, descriptionElement) => {
     const newDescriptionInput = document.createElement('textarea');
     newDescriptionInput.name = 'description';
     newDescriptionInput.rows = 3;
-    newDescriptionInput.value = descriptionElement.textContent;
+    newDescriptionInput.value = description;
     editForm.appendChild(newDescriptionInput);
 
     // Update button
@@ -121,6 +137,7 @@ const enterEditMode = (storyEl, tagsElement, descriptionElement) => {
     deleteButton.type = 'button';
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', () => {
+        deleteStory(storyId);
         storyEl.remove();
     });
 
@@ -131,10 +148,14 @@ const enterEditMode = (storyEl, tagsElement, descriptionElement) => {
     storyEl.appendChild(editForm);
 }
 
-// Example add story to the DOM
-const story = createStory(1, 'https://picsum.photos/200', ['#nature', '#travel'], 'This is a description');
-storiesContainer.appendChild(story);
+const loadStories = async () => {
+    for (const story of await getAllStories()) {
+        const storyElement = createStory(story.id, story.image, story.tags, story.description);
+        storiesContainer.appendChild(storyElement);
+    }
+}
 
 document.getElementById('storyForm').addEventListener('submit', onFormSubmit);
 document.getElementById('clearButton').addEventListener('click', clearFilter);
 document.getElementById('filterButton').addEventListener('click', filter);
+loadStories();
