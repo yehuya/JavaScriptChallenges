@@ -25,7 +25,7 @@ export const addNewStory = (image, tags, description) => new Promise((resolve, r
     const request = db
         .transaction(["stories"], "readwrite")
         .objectStore("stories")
-        .add({image, tags, description, created: new Date()});
+        .add({image, tags, description, created: new Date(), updated: new Date()});
 
     request.onsuccess = () => resolve(request.result);
     request.onerror = reject;
