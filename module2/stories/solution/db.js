@@ -1,4 +1,4 @@
-const DB_VERSION = 2;
+const DB_VERSION = 1;
 
 const openConnection = () => new Promise((resolve, reject) => {
     const request = window.indexedDB.open("stories", DB_VERSION);
@@ -22,7 +22,6 @@ const openConnection = () => new Promise((resolve, reject) => {
 const db = await openConnection();
 
 export const addNewStory = (image, tags, description) => new Promise((resolve, reject) => {
-    // const db = request.result;
     const request = db
         .transaction(["stories"], "readwrite")
         .objectStore("stories")
