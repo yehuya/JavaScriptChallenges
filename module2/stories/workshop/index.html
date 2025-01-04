@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Challenges | Module 2 IndexedDb</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <h1>Offline Stories</h1>
+    </header>
+    <div class="container">
+        <div class="story-form">
+            <form id="storyForm">
+                <input type="file" id="image" name="image" accept="image/*" required>
+                <select id="tags" name="tags" multiple size="5" required>
+                    <option>#nature</option>
+                    <option>#travel</option>
+                    <option>#food</option>
+                    <option>#sports</option>
+                    <option>#art</option>
+                </select>
+                <textarea id="description" name="description" placeholder="Write a short description..." rows="3" required></textarea>
+                <button type="submit">Add Story</button>
+            </form>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by description or tags...">
+            <button id="searchButton">Search</button>
+            <button id="clearButton" class="clear-button">Clear</button>
+        </div>
+        <div class="stories-container" id="storiesContainer"></div>
+    </div>
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
