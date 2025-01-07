@@ -21,7 +21,7 @@ const isLoggedIn = () => {
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    document.cookie = `loggedIn=true; path=/module2/portal/solution`;
+    document.cookie = `loggedIn=true; path=/module2/portal/solution; Max-Age=60`;
     isLoggedIn();
 });
 
@@ -31,3 +31,18 @@ logout.addEventListener("click", () => {
 });
 
 isLoggedIn();
+
+// Implement object like document.cookie
+const couple = {
+    _value: "",
+    get name() {
+        return this._value;
+    },
+    set name(value) {
+        this._value = this._value ? `${this._value}+${value}` : value;
+    },
+}
+
+couple.name = "A";
+couple.name = "B";
+console.log(couple.name); // Expected output: "A+B"
