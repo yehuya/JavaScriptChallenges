@@ -56,7 +56,6 @@ function update() {
     // Check collisions with walls
     if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
         state.gameOver = true;
-        saveScore();
         return;
     }
 
@@ -65,7 +64,6 @@ function update() {
         for (let block of state.snake) {
             if (head.x === block.x && head.y === block.y) {
                 state.gameOver = true;
-                saveScore();
                 return;
             }
         }
