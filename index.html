@@ -1,45 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Challenges</title>
+    <style>
+        /* General reset for margin, padding, and box-sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Set a simple, modern font */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Center content and add padding */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* Title and heading style */
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #444;
+        }
+
+        /* Group title style */
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #007BFF;
+        }
+
+        /* Sub-module title style */
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        /* Style the unordered list */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        /* Style for each list item */
+        li {
+            background-color: #ffffff;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        /* Hover effect for the list item */
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Style the anchor links */
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            width: 100%;
+            height: 100%;
+            transition: color 0.3s ease-in-out;
+        }
+
+        /* Hover effect for links */
+        a:hover {
+            color: #007BFF;
+        }
+
+        /* Footer or bottom content */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
 </head>
+
 <body>
-    <ul>
-        <li>
-            <a href="/module1/canvas-playground/index.html">Module 1 - Canvas - Playground</a>
-        </li>
-        <li>
-            <a href="/module1/canvas-workshop/index.html">Module 1 - Canvas - Workshop</a>
-        </li>
-        <li>
-            <a href="/module1/canvas-solution/index.html">Module 1 - Canvas - Solution</a>
-        </li>
-        <li>
-            <a href="/module2/snake-workshop/snake.html">Module 2 - Snake - Workshop</a>
-        </li>
-        <li>
-            <a href="/module2/snake-solution/snake.html">Module 2 - Snake - Solution</a>
-        </li>
-        <li>
-            <a href="/module2/gallery-workshop/">Module 2 - Gallery - Workshop</a>
-        </li>
-        <li>
-            <a href="/module2/gallery-solution/">Module 2 - Gallery - Solution</a>
-        </li>
-        <li>
-            <a href="/module2/portal-workshop/">Module 2 - Cookies - Workshop</a>
-        </li>
-        <li>
-            <a href="/module2/portal-solution/">Module 2 - Cookies - Solution</a>
-        </li>
-        <li>
-            <a href="/module2/stories/workshop/">Module 2 - Stories - Workshop</a>
-        </li>
-        <li>
-            <a href="/module2/stories/solution/">Module 2 - Stories - Solution</a>
-        </li>
-    </ul>
+    <div class="container">
+        <h1>JavaScript Challenges</h1>
+
+        <!-- Module 1 -->
+        <div class="module">
+            <h2>Module 1</h2>
+
+            <!-- Canvas -->
+            <h3>Canvas</h3>
+            <ul>
+                <li>
+                    <a href="/module1/canvas-playground/index.html">Playground</a>
+                </li>
+                <li>
+                    <a href="/module1/canvas-workshop/index.html">Workshop</a>
+                </li>
+                <li>
+                    <a href="/module1/canvas-solution/index.html">Solution</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="module">
+            <h2>Module 2</h2>
+
+            <!-- Snake -->
+            <h3>Snake</h3>
+            <ul>
+                <li>
+                    <a href="/module2/snake/workshop/snake.html">Workshop</a>
+                </li>
+                <li>
+                    <a href="/module2/snake/solution/snake.html">Solution</a>
+                </li>
+            </ul>
+
+            <!-- Gallery -->
+            <h3>Gallery</h3>
+            <ul>
+                <li>
+                    <a href="/module2/gallery/workshop/">Workshop</a>
+                </li>
+                <li>
+                    <a href="/module2/gallery/solution/">Solution</a>
+                </li>
+            </ul>
+
+            <!-- Cookies -->
+            <h3>Cookies</h3>
+            <ul>
+                <li>
+                    <a href="/module2/portal/workshop/">Workshop</a>
+                </li>
+                <li>
+                    <a href="/module2/portal/solution/">Solution</a>
+                </li>
+            </ul>
+
+            <!-- Stories -->
+            <h3>Stories</h3>
+            <ul>
+                <li>
+                    <a href="/module2/stories/workshop/">Workshop</a>
+                </li>
+                <li>
+                    <a href="/module2/stories/solution/">Solution</a>
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 JavaScript Challenges | All rights reserved</p>
+        </footer>
+    </div>
 </body>
+
 </html>
