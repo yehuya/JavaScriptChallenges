@@ -1,7 +1,7 @@
 if("serviceWorker" in window.navigator) {
     try {
         const registration = await window.navigator.serviceWorker.register(new URL('./sw.js', import.meta.url), {
-            scope: "/module2/gallery-solution/"
+            scope: "/module2/gallery/solution/"
         });
 
         if (registration.installing) {
