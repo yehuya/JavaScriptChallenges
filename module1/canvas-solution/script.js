@@ -4,6 +4,7 @@ import { opacity } from "./filters/opacity";
 import { mask1, mask2, mask3, mask4, mask5, mask6, mask7 } from "./filters/masks";
 import { sobel, sobelX, sobelY, sharpen, gaussianBlur} from "./filters/kernel";
 import { noise1, noise2, noise3, noise4} from "./filters/noises";
+import { pixelation } from "./filters/pixelation";
 import { filter, applyFilter, applyFilterOffscreen, applyAnimation, loadImages, getCanvasContext, setCanvasSize } from "./canvas";
 import flowerSrc from "./images/flower.jpg";
 import maskSrc from "./images/mask.jpg";
@@ -30,6 +31,7 @@ const flowerFilters = () => {
         applyFilterOffscreen("sharpen", sharpen, worker2),
         applyFilterOffscreen("gaussian-blur", gaussianBlur, worker2),
         applyFilter("opacity", opacity),
+        applyFilter("pixelation", pixelation),
         applyFilter("sobelY", sobelY),
         applyFilter("sobelX", sobelX),
         applyFilter("sobel", sobel),
