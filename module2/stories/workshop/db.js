@@ -3,9 +3,9 @@ const DB_VERSION = 1;
 /*
     Schema:
         stories
-            - id
+            - id (Primary key, auto increment)
             - image
-            - tags
+            - tags (Index)
             - description
             - created
             - updated
